@@ -28,11 +28,11 @@ class ParseHelper {
     val parsedTable = Jsoup.parse(table)
     val rows = parsedTable.select("tr") // get elements (collection as array) consist of rows body table
     val infoCitiesArray = new ArrayBuffer[InfoCities]
-    for (i <- 0 until rows.size()) {
+    for (i <- 1 until rows.size()) {
       val row = rows.get(i)
       val cols = row.select("td") // get all column in row
       val InfoCities = new InfoCities(
-        worldRank = cols.get(0).text(), //исправить для ИНТ
+        worldRank = cols.get(0).text().toInt,
         city = cols.get(1).text(),
         country = cols.get(2).text(),
         population = cols.get(3).text(),
