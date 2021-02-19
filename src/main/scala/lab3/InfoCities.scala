@@ -8,18 +8,17 @@ class InfoCities(
                   var city: String,
                   var country: String,
                   var population: String, //Int
-                  var mp: String //Int
+                  var metroPopulation: String //Int
                 ) {
 
-  def toJson(): JsonAST.JValue = { //return json-object, here we use json4s library, это в файле pom(dependencies)
-    /** Create json object from this object */
+  def toJson(): JsonAST.JValue = { //return json-object, here use json4s library //pom(dependencies)
     val obj =
       ("worldRank" -> worldRank) ~
         ("city" -> city) ~
         ("country" -> country) ~
         ("population" -> population) ~
-        ("mp" -> mp)
-        obj
+        ("metroPopulation" -> metroPopulation)
+    obj
   }
 
 }
