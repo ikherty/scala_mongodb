@@ -42,8 +42,8 @@ class MongoFunctions {
 
   def printMetroes(collection: MongoCollection[Document]): Unit = {
     println("Список городов-столиц:")
-//    collection.find(Document("population"->Document("$eq" -> "metroPopulation"))
-    collection.find()
+    collection.find(equal("population", "metroPopulation"))
+      //collection.find()
       .projection(fields(include("city", "country", "population", "metroPopulation"), excludeId()))
       .sort(ascending("worldRank"))
       .printResults()
@@ -69,4 +69,12 @@ class MongoFunctions {
     println()
   }
 
+  def printWOpop(collection: MongoCollection[Document]): Unit = {
+    println("Страны с неизвестной численностью населения в столице:")
+    collection.find(equal("metroPopulation", 0))
+      .projection(fields(include("country", "metroPopulation"), excludeId()))
+      .sort(ascending("worldRank"))
+      .printResults()
+    println()
+  }
 }

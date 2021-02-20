@@ -8,7 +8,8 @@ object mainLab4 extends App {
   val collection = mongoFunctions.getCollection()
   mongoFunctions.printTop20(collection=collection)
   mongoFunctions.printRussianCities(collection=collection)
-  mongoFunctions.printMetroes(collection=collection)
+  //mongoFunctions.printMetroes(collection=collection)
   mongoFunctions.print10biggestCities(collection=collection)
   mongoFunctions.printBet6and8kPop(collection=collection)
+  mongoFunctions.printWOpop(collection=collection)
 }
