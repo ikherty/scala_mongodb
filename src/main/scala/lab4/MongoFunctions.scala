@@ -1,10 +1,8 @@
 package lab4
 
-
 import scala.io.Source
 import MongoHelpers._
 import org.mongodb.scala._
-import org.mongodb.scala.bson.BsonDocument
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.model.Projections._
 import org.mongodb.scala.model.Sorts._
@@ -15,7 +13,7 @@ class MongoFunctions {
     val mongoClient: MongoClient = MongoClient("mongodb://localhost")
     val database: MongoDatabase = mongoClient.getDatabase("cities")
     val collection: MongoCollection[Document] = database.getCollection("worldCities")
-    //collection.drop().results()
+    collection.drop().results()
     if (collection.count().results()(0) == 0) {
       val documents = (0 to 299) map { i: Int => Document(Source.fromFile("src/main/resources/jsons/" + i + ".json").mkString) }
       collection.insertMany(documents).results()
@@ -44,8 +42,9 @@ class MongoFunctions {
 
   def printMetroes(collection: MongoCollection[Document]): Unit = {
     println("Список городов-столиц:")
-    collection.find(equal("population", "metroPopulation"))
-      .projection(fields(include("city", "country", "population"), excludeId()))
+//    collection.find(Document("population"->Document("$eq" -> "metroPopulation"))
+    collection.find()
+      .projection(fields(include("city", "country", "population", "metroPopulation"), excludeId()))
       .sort(ascending("worldRank"))
       .printResults()
     println()
@@ -53,7 +52,7 @@ class MongoFunctions {
 
   def print10biggestCities(collection: MongoCollection[Document]): Unit = {
     println("10 городов с наибольшим населением:")
-    collection.find()
+    collection.find(exists("population"))
       .projection(fields(include("city", "country", "population"), excludeId()))
       .sort(descending("population"))
       .limit(10)
