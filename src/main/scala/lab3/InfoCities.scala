@@ -11,9 +11,15 @@ class InfoCities(
                   var metroPopulation: String
                 ) {
 
-  def stringToint(): Int = {
-    val num = population.replace(",", "")
-    num.toInt
+  def pToint(): Int = {
+    val pop = population.replace(",", "")
+    pop.toInt
+  }
+
+  def mpToint(): Int = {
+    val toRemove = ",. ".toSet
+    val mpop = if (metroPopulation == "") 0 else metroPopulation.filterNot(toRemove).toInt
+    mpop
   }
 
   def toJson(): JsonAST.JValue = { //return json-object, here use json4s library //pom(dependencies)
@@ -21,8 +27,8 @@ class InfoCities(
       ("worldRank" -> worldRank.toInt) ~
         ("city" -> city) ~
         ("country" -> country) ~
-        ("population" -> stringToint()) ~
-        ("metroPopulation" -> stringToint())
+        ("population" -> pToint()) ~
+        ("metroPopulation" -> mpToint())
     obj
   }
 
