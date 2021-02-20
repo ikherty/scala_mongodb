@@ -32,7 +32,7 @@ class ParseHelper {
       val row = rows.get(i)
       val cols = row.select("td") // get all column in row
       val InfoCities = new InfoCities(
-        worldRank = cols.get(0).text().toInt,
+        worldRank = cols.get(0).text(),
         city = cols.get(1).text(),
         country = cols.get(2).text(),
         population = cols.get(3).text(),
